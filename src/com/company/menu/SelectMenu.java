@@ -1,6 +1,7 @@
 package com.company.menu;
 
 import com.company.entities.*;
+import com.company.repo.DB;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,10 +29,10 @@ public class SelectMenu implements MenuInterface {
                 selectFlights();
             }
             if(option == 4) {
-                selectTicketsOfPerson();
+                selectTicketsOfFlight();
             }
             if(option == 5) {
-                selectTicketsOfFlight();
+                selectTicketsOfPerson();
             }
         }
         catch (Exception e) {
@@ -45,7 +46,7 @@ public class SelectMenu implements MenuInterface {
     }
 
     public static void selectPeople() throws SQLException {
-        ResultSet rs = Menu.getConnection().createStatement().executeQuery("SELECT * FROM person");
+        ResultSet rs = DB.getConnection().createStatement().executeQuery("SELECT * FROM person");
         while (rs.next()) {
             Person person = null;
             if(rs.getString("vip_level") != null) {
@@ -60,8 +61,42 @@ public class SelectMenu implements MenuInterface {
     }
 
     public static void selectTickets() throws SQLException {
-        ResultSet rs = Menu.getConnection().createStatement().executeQuery("SELECT * FROM ticket");
+        printResult(DB.getConnection().createStatement().executeQuery("SELECT * FROM ticket"));
+    }
+
+
+    public static void selectFlights() throws SQLException {
+        ResultSet rs = DB.getConnection().createStatement().executeQuery("SELECT * FROM flight");
         while (rs.next()) {
+            Flight flight = new Flight(
+                    rs.getInt("flight_id"),
+                    rs.getString("date"),
+                    rs.getString("from_place"),
+                    rs.getString("to_place")
+            );
+            System.out.println(flight);
+        }
+    }
+
+    public static void selectTicketsOfPerson() throws SQLException {
+        System.out.println("Enter person id: ");
+        int id = Integer.parseInt(new Scanner(System.in).nextLine());
+        ResultSet rs = DB.getConnection().createStatement().executeQuery("SELECT * FROM ticket WHERE person_id = " + id);
+        printResult(rs);
+    }
+
+
+    public static void selectTicketsOfFlight() throws SQLException {
+        System.out.println("Enter flight id: ");
+        int id = Integer.parseInt(new Scanner(System.in).nextLine());
+        ResultSet rs = DB.getConnection().createStatement().executeQuery("SELECT * FROM ticket WHERE flight_id = " + id);
+        printResult(rs);
+    }
+
+
+    public static void printResult(ResultSet rs) throws SQLException {
+        while (rs.next()) {
+            System.out.println(rs.getString("class"));
             UniqueClass type = null;
             if(rs.getString("class").equals("b")) {
                 type = new BusinessClass(
@@ -83,98 +118,6 @@ public class SelectMenu implements MenuInterface {
                 System.out.println(type);
             }
             if(rs.getString("class").equals("f")) {
-                type = new FirstClass(
-                        rs.getInt("ticket_id"),
-                        rs.getInt("place"),
-                        rs.getInt("flight_id"),
-                        rs.getInt("price"),
-                        rs.getString("menu")
-                );
-                System.out.println(type);
-            }
-        }
-    }
-
-
-    public static void selectFlights() throws SQLException {
-        ResultSet rs = Menu.getConnection().createStatement().executeQuery("SELECT * FROM flight");
-        while (rs.next()) {
-            Flight flight = new Flight(
-                    rs.getInt("flight_id"),
-                    rs.getString("date"),
-                    rs.getString("from_place"),
-                    rs.getString("to_place")
-            );
-            System.out.println(flight);
-        }
-    }
-
-
-    public static void selectTicketsOfPerson() throws SQLException {
-        System.out.println("Enter person id: ");
-        int id = Integer.parseInt(new Scanner(System.in).nextLine());
-        ResultSet rs = Menu.getConnection().createStatement().executeQuery("SELECT * FROM tickets WHERE person_id = " + id);
-        while (rs.next()) {
-            Type type = null;
-            if(rs.getString("class") == "b") {
-                type = new BusinessClass(
-                        rs.getInt("ticket_id"),
-                        rs.getInt("place"),
-                        rs.getInt("flight_id"),
-                        rs.getInt("price")
-                );
-                System.out.println(type);
-            }
-            if(rs.getString("class") == "e") {
-                type = new EconomyClass(
-                        rs.getInt("ticket_id"),
-                        rs.getInt("place"),
-                        rs.getInt("flight_id"),
-                        rs.getInt("price"),
-                        rs.getInt("baggage")
-                );
-                System.out.println(type);
-            }
-            if(rs.getString("class") == "f") {
-                type = new FirstClass(
-                        rs.getInt("ticket_id"),
-                        rs.getInt("place"),
-                        rs.getInt("flight_id"),
-                        rs.getInt("price"),
-                        rs.getString("menu")
-                );
-                System.out.println(type);
-            }
-        }
-    }
-
-
-    public static void selectTicketsOfFlight() throws SQLException {
-        System.out.println("Enter flight id: ");
-        int id = Integer.parseInt(new Scanner(System.in).nextLine());
-        ResultSet rs = Menu.getConnection().createStatement().executeQuery("SELECT * FROM tickets WHERE flight_id = " + id);
-        while (rs.next()) {
-            Type type = null;
-            if(rs.getString("class") == "b") {
-                type = new BusinessClass(
-                        rs.getInt("ticket_id"),
-                        rs.getInt("place"),
-                        rs.getInt("flight_id"),
-                        rs.getInt("price")
-                );
-                System.out.println(type);
-            }
-            if(rs.getString("class") == "e") {
-                type = new EconomyClass(
-                        rs.getInt("ticket_id"),
-                        rs.getInt("place"),
-                        rs.getInt("flight_id"),
-                        rs.getInt("price"),
-                        rs.getInt("baggage")
-                );
-                System.out.println(type);
-            }
-            if(rs.getString("class") == "f") {
                 type = new FirstClass(
                         rs.getInt("ticket_id"),
                         rs.getInt("place"),
