@@ -1,5 +1,5 @@
 package com.company.entities;
-
+/*Parent class from which is inherited VipPerson*/
 public class Person {
     private int id;
     private String full_name;

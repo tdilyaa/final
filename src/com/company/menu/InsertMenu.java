@@ -42,6 +42,8 @@ public class InsertMenu {
         System.out.println("Enter age: ");
         int age = Integer.parseInt(scan.nextLine());
 
+
+        /*Here we check for a VIP person*/
         System.out.println("Is vip? (y/n):");
         String vip = scan.nextLine();
         if(vip.equals("n")) {
@@ -54,7 +56,7 @@ public class InsertMenu {
             insertVipPerson(new VipPerson(0, full_name, age, vip_level));
             return;
         }
-        System.out.println("Something went wrong");
+        System.out.println("Something went wrong");   // alert
     }
 
     public static void insertNonVipPerson(Person person) throws SQLException {
@@ -64,7 +66,7 @@ public class InsertMenu {
     public static void insertVipPerson(VipPerson person) throws SQLException {
         Menu.getConnection().createStatement().execute("INSERT INTO person (fullname, age, vip) VALUES ('"+person.getFull_name()+"','"+person.getAge()+"', '"+person.getPrivilege_level()+"')");
     }
-
+/*insert tickets data*/
     public static void insertTicket() throws SQLException {
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter flight id: ");
@@ -103,7 +105,7 @@ public class InsertMenu {
     public static void insertFirstClass(FirstClass firstClass, int person_id) throws SQLException {
         Menu.getConnection().createStatement().execute("INSERT INTO ticket (flight_id, place, price, person_id, class, menu) VALUES ('"+firstClass.getFlight()+"','"+firstClass.getPlace()+"','"+firstClass.getPrice()+"','"+person_id+"','f','"+firstClass.getMenu()+"')");
     }
-
+/*insert flight data*/
     public static void insertFlight() throws SQLException {
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter date (yyyy-mm-dd): ");

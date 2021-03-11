@@ -1,5 +1,5 @@
 package com.company.entities;
-
+/*child class*/
 public class VipPerson extends Person {
     private int privilege_level;
 

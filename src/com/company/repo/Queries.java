@@ -4,6 +4,7 @@ import com.company.entities.*;
 import com.company.menu.Menu;
 
 import java.sql.SQLException;
+/*Here we write all sql queries*/
 
 public class Queries {
 

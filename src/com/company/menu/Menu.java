@@ -19,7 +19,7 @@ public class Menu implements MenuInterface {
         }
         return connection;
     }
-
+/*display options*/
     public static void menu() {
         System.out.println("Select option: ");
         System.out.println("1. Insert info");

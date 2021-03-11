@@ -1,6 +1,6 @@
 package com.company.entities;
 
-public abstract class UniqueClass {
+public abstract class UniqueClass {    // abstrac parent class
     private int id;
     private int place;
     private int flight;

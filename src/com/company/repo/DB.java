@@ -3,7 +3,7 @@ package com.company.repo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+/*conection  to database mySql*/
 public class DB {
     public static Connection getConnection() {
         Connection connection = null;

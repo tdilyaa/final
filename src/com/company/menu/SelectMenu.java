@@ -16,7 +16,8 @@ public class SelectMenu implements MenuInterface {
         System.out.println("4. Select tickets of flight");
         System.out.println("5. Select tickets of person");
         System.out.println("0. Quit");
-
+        /* displaying our options*/
+/*use try catch to check*/
         int option = Integer.parseInt(new Scanner(System.in).nextLine());
         try {
             if(option == 1) {
@@ -106,6 +107,9 @@ public class SelectMenu implements MenuInterface {
                         rs.getInt("price")
                 );
                 System.out.println(type);
+                /*if business class we print ticket id,place,flight id and prise */
+
+
             }
             if(rs.getString("class").equals("e")) {
                 type = new EconomyClass(
@@ -116,6 +120,7 @@ public class SelectMenu implements MenuInterface {
                         rs.getInt("baggage")
                 );
                 System.out.println(type);
+                /*if economy class we print also baggage */
             }
             if(rs.getString("class").equals("f")) {
                 type = new FirstClass(
@@ -126,7 +131,7 @@ public class SelectMenu implements MenuInterface {
                         rs.getString("menu")
                 );
                 System.out.println(type);
-            }
+            }/*if first class also print menu without baggage */
         }
     }
 }
